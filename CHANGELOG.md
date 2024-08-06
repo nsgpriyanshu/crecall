@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.2.1](https://github.com/nsgpriyanshu/crecall/compare/0.2.0...0.2.1) - (2024-08-06)
+
+## Bug Fixes
+
+- Deployment issue ([9c57819](https://github.com/nsgpriyanshu/crecall/commit/9c578199b7da901bebff017a5d3ac429cce372e8))
+- Some minor error ([9485a80](https://github.com/nsgpriyanshu/crecall/commit/9485a80c8b3a2bbcdce72ded5beae07e3a338272))
+
+## Continuous Integration
+
+- Add all the github actions and config files ([e0855e7](https://github.com/nsgpriyanshu/crecall/commit/e0855e7ecc985ad52613d6c2956267754947d967))
+
 # [0.2.0](https://github.com/nsgpriyanshu/crecall/compare/0.1.1...0.2.0) - (2024-08-06)
 
 ## Features
