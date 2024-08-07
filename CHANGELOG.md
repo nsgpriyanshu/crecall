@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.3.0](https://github.com/nsgpriyanshu/crecall/compare/0.2.1...0.3.0) - (2024-08-07)
+
+## Bug Fixes
+
+- Dark theme mode toggeling issue ([0ccba07](https://github.com/nsgpriyanshu/crecall/commit/0ccba079b12cbaac010d1e2cdcb4368d79fa2acb))
+
+## Features
+
+- Add Footer for the app/website ([84fc0ed](https://github.com/nsgpriyanshu/crecall/commit/84fc0ed9b2ac929f262808341be233e97588453c))
+
+## Styling
+
+- Add favicon ([4764411](https://github.com/nsgpriyanshu/crecall/commit/47644116c621a16d4efa36d98ef5aa1ec8d8548c))
+- Add branding images and logo ([0d75288](https://github.com/nsgpriyanshu/crecall/commit/0d752883a99003ec5d309155f99b41233f1e3ba4))
+
 # [0.2.1](https://github.com/nsgpriyanshu/crecall/compare/0.2.0...0.2.1) - (2024-08-06)
 
 ## Bug Fixes
