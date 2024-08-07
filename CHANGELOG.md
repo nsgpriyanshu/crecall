@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.3.1](https://github.com/nsgpriyanshu/crecall/compare/0.3.0...0.3.1) - (2024-08-07)
+
+## Bug Fixes
+
+- The deployment bug ([d57de61](https://github.com/nsgpriyanshu/crecall/commit/d57de61ba66bf3b8585b1716b3ae8aabcb08b967))
+
 # [0.3.0](https://github.com/nsgpriyanshu/crecall/compare/0.2.1...0.3.0) - (2024-08-07)
 
 ## Bug Fixes
