@@ -15,7 +15,7 @@ function Landing() {
       <div className="flex gap-4 py-4">
         <div>
           <Button asChild className="font-bold">
-            <Link href="/">
+            <Link href="/join">
               <Link1Icon className="mr-2 size-6" />
               Join
             </Link>
@@ -23,7 +23,7 @@ function Landing() {
         </div>
         <div>
           <Button asChild className="font-bold">
-            <Link href="/">
+            <Link href="/create">
               <MagicWandIcon className="mr-2 size-6" />
               Create
             </Link>
