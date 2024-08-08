@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.4.1](https://github.com/nsgpriyanshu/crecall/compare/0.4.0...0.4.1) - (2024-08-08)
+
+## Bug Fixes
+
+- **deps:** Update package-lock.json and package.json ([199a7f0](https://github.com/nsgpriyanshu/crecall/commit/199a7f0993f43fa7558e96c69270272c0642baee))
+
 # [0.4.0](https://github.com/nsgpriyanshu/crecall/compare/0.3.1...0.4.0) - (2024-08-08)
 
 ## Documentation
