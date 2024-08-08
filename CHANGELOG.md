@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.4.0](https://github.com/nsgpriyanshu/crecall/compare/0.3.1...0.4.0) - (2024-08-08)
+
+## Documentation
+
+- Updtae the readme.md ([bd9ddb0](https://github.com/nsgpriyanshu/crecall/commit/bd9ddb074c0dae845f26ffa151d0ec6103e97d3b))
+
+## Features
+
+- Add main landing page ([0316d0b](https://github.com/nsgpriyanshu/crecall/commit/0316d0b2a13200663256e72c748d29f990b01ded))
+
 # [0.3.1](https://github.com/nsgpriyanshu/crecall/compare/0.3.0...0.3.1) - (2024-08-07)
 
 ## Bug Fixes
