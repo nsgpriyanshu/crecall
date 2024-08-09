@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format:write": "npx prettier . --write",
     "format:check": "npx prettier . --check",
-    "release": "cliff-jumper"
+    "release": "cliff-jumper",
+    "server": "node src/server.js"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.0",
