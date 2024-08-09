@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.5.0](https://github.com/nsgpriyanshu/crecall/compare/0.4.1...0.5.0) - (2024-08-09)
+
+## Bug Fixes
+
+- Websoket issue also update the server.js and roomid.tsx ([01af22e](https://github.com/nsgpriyanshu/crecall/commit/01af22ea64b4ba101d97111b436a8ee1d466e8bd))
+- Server error for web soket ([e7152a5](https://github.com/nsgpriyanshu/crecall/commit/e7152a57b791225da9c6f6c8e9d3df937475bbb5))
+- Room component ([e482e99](https://github.com/nsgpriyanshu/crecall/commit/e482e994e9abbf3ad640960f5e5d8fb023dfc16c))
+
+## Features
+
+- Add web socket server for handling server and client ([4b700b5](https://github.com/nsgpriyanshu/crecall/commit/4b700b5174802dffdfae3b842ae6dc992d6c8737))
+
 # [0.4.1](https://github.com/nsgpriyanshu/crecall/compare/0.4.0...0.4.1) - (2024-08-08)
 
 ## Bug Fixes
