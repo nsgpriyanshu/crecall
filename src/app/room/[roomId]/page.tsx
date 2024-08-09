@@ -19,56 +19,76 @@ const Room = () => {
   const socketRef = useRef<WebSocket | null>(null)
 
   useEffect(() => {
+    const wsUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+  
+    if (!wsUrl) {
+      console.error('WebSocket URL is not defined');
+      return;
+    }
+  
     // Initialize WebSocket connection
-    socketRef.current = new WebSocket('ws://localhost:8080')
+    socketRef.current = new WebSocket(wsUrl);
+  
+    socketRef.current.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.roomId === roomId && peer) {
+        peer.signal(message.signal);
+      }
+    };
+  
+    // Cleanup WebSocket connection on component unmount
+    return () => {
+      socketRef.current?.close();
+    };
+  }, [roomId, peer]);
+
+  useEffect(() => {
+    if (!roomId) return;
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
       if (userVideo.current) {
-        userVideo.current.srcObject = stream
+        userVideo.current.srcObject = stream;
       }
-      setStream(stream)
+      setStream(stream);
 
       const peerInstance = new SimplePeer({
         initiator: location.pathname.includes('create'),
         trickle: false,
         stream: stream,
-      })
+      });
 
       peerInstance.on('signal', data => {
-        setPeerSignal(data)
-        socketRef.current?.send(JSON.stringify({ roomId, signal: data }))
-      })
+        setPeerSignal(data);
+        socketRef.current?.send(JSON.stringify({ roomId, signal: data }));
+      });
 
       peerInstance.on('stream', peerStream => {
         if (peerVideo.current) {
-          peerVideo.current.srcObject = peerStream
+          peerVideo.current.srcObject = peerStream;
         }
-      })
+      });
 
-      setPeer(peerInstance)
-    })
+      setPeer(peerInstance);
+    }).catch(error => {
+      console.error('Error accessing media devices.', error);
+    });
 
-    socketRef.current.onmessage = event => {
-      const message = JSON.parse(event.data)
-      if (message.roomId === roomId && peer) {
-        peer.signal(message.signal)
-      }
-    }
-
+    // Cleanup peer instance and stream on component unmount
     return () => {
-      socketRef.current?.close()
-    }
-  }, [roomId])
+      peer?.destroy();
+      stream?.getTracks().forEach(track => track.stop());
+    };
+  }, [roomId]);
 
   const handleHideCamera = () => {
     if (stream) {
-      stream.getVideoTracks()[0].enabled = !stream.getVideoTracks()[0].enabled
+      stream.getVideoTracks()[0].enabled = !stream.getVideoTracks()[0].enabled;
     }
   }
 
   const handleDisconnect = () => {
-    peer?.destroy()
-    socketRef.current?.close()
+    peer?.destroy();
+    socketRef.current?.close();
   }
 
   return (
@@ -84,11 +104,9 @@ const Room = () => {
       <textarea value={peerSignal ? JSON.stringify(peerSignal) : ''} readOnly rows={6} cols={50} />
       <div className="mt-4 flex gap-4">
         <Button onClick={handleHideCamera}>
-          {' '}
           <EyeClosedIcon className="mr-2 size-6" /> Hide Camera
         </Button>
         <Button onClick={handleDisconnect}>
-          {' '}
           <LinkBreak2Icon className="mr-2 size-6" /> Disconnect
         </Button>
       </div>
