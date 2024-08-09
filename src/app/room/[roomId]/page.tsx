@@ -1,107 +1,99 @@
-"use client"
+'use client'
 
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'next/navigation';
-import SimplePeer from 'simple-peer';
-import { Button } from '@/components/ui/button'; // Importing a button component
-import { EyeClosedIcon, LinkBreak2Icon, LinkNone1Icon } from '@radix-ui/react-icons';
+import React, { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import SimplePeer from 'simple-peer'
+import { EyeClosedIcon, LinkBreak2Icon } from '@radix-ui/react-icons'
+import { Button } from '@/components/ui/button'
 
 const Room = () => {
-  const { roomId } = useParams();
+  const searchParams = useSearchParams()
+  const roomId = searchParams.get('roomId')
 
-  const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
-  const [peerSignal, setPeerSignal] = useState<string | null>(null);
-  const userVideo = useRef<HTMLVideoElement>(null);
-  const peerVideo = useRef<HTMLVideoElement>(null);
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const [cameraOn, setCameraOn] = useState(true);
+  const [peer, setPeer] = useState<SimplePeer.Instance | null>(null)
+  const [peerSignal, setPeerSignal] = useState<any>(null)
+  const userVideo = useRef<HTMLVideoElement>(null)
+  const peerVideo = useRef<HTMLVideoElement>(null)
+  const [stream, setStream] = useState<MediaStream | null>(null)
+
+  const socketRef = useRef<WebSocket | null>(null)
 
   useEffect(() => {
-    // Access the user's camera and microphone
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+    // Initialize WebSocket connection
+    socketRef.current = new WebSocket('ws://localhost:8080')
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
       if (userVideo.current) {
-        userVideo.current.srcObject = stream;
+        userVideo.current.srcObject = stream
       }
-      setStream(stream);
+      setStream(stream)
 
       const peerInstance = new SimplePeer({
         initiator: location.pathname.includes('create'),
         trickle: false,
         stream: stream,
-      });
+      })
 
-      peerInstance.on('signal', (data) => {
-        setPeerSignal(JSON.stringify(data));
-      });
+      peerInstance.on('signal', data => {
+        setPeerSignal(data)
+        socketRef.current?.send(JSON.stringify({ roomId, signal: data }))
+      })
 
-      peerInstance.on('stream', (peerStream) => {
+      peerInstance.on('stream', peerStream => {
         if (peerVideo.current) {
-          peerVideo.current.srcObject = peerStream;
+          peerVideo.current.srcObject = peerStream
         }
-      });
+      })
 
-      setPeer(peerInstance);
-    });
+      setPeer(peerInstance)
+    })
+
+    socketRef.current.onmessage = event => {
+      const message = JSON.parse(event.data)
+      if (message.roomId === roomId && peer) {
+        peer.signal(message.signal)
+      }
+    }
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, [roomId]);
-
-  const handleConnect = () => {
-    if (peerSignal && peer) {
-      const signalData = JSON.parse(peerSignal);
-      peer.signal(signalData);
+      socketRef.current?.close()
     }
-  };
+  }, [roomId])
 
   const handleHideCamera = () => {
     if (stream) {
-      stream.getVideoTracks()[0].enabled = !cameraOn;
-      setCameraOn(!cameraOn);
+      stream.getVideoTracks()[0].enabled = !stream.getVideoTracks()[0].enabled
     }
-  };
+  }
 
   const handleDisconnect = () => {
-    if (peer) {
-      peer.destroy();
-      setPeer(null);
-      setPeerSignal(null);
-      if (peerVideo.current) {
-        peerVideo.current.srcObject = null;
-      }
-    }
-  };
+    peer?.destroy()
+    socketRef.current?.close()
+  }
 
   return (
     <div className="relative flex h-auto w-full flex-col items-center justify-center py-40 md:h-[20rem] lg:h-[30rem]">
       <h1 className="text-2xl font-bold text-neutral-400 md:text-3xl lg:text-4xl">
-        Your Room ID: <span className="text-neutral-100 underline underline-offset-8">{roomId}</span>
+        Your Room ID:{' '}
+        <span className="text-neutral-100 underline underline-offset-8"> {roomId}</span>
       </h1>
-      <div className="flex items-center justify-center gap-4 py-4 rounded-lg">
-        <video ref={userVideo} autoPlay muted className="rounded-lg border border-neutral-600" style={{ width: '45%' }} />
-        <video ref={peerVideo} autoPlay className="rounded-lg border border-neutral-600" style={{ width: '45%' }} />
+      <div className="flex items-center justify-center gap-4 rounded-lg">
+        <video ref={userVideo} autoPlay muted className="w-1/2 rounded-lg" />
+        <video ref={peerVideo} autoPlay className="w-1/2 rounded-lg" />
       </div>
-      <textarea value={peerSignal || ''} readOnly rows={6} cols={50} className="mt-4" />
-      <div className="flex gap-4 mt-4">
-        <Button onClick={handleConnect} className="font-bold">
-          <LinkNone1Icon className="mr-2 size-6"/>
-          Connect
+      <textarea value={peerSignal ? JSON.stringify(peerSignal) : ''} readOnly rows={6} cols={50} />
+      <div className="mt-4 flex gap-4">
+        <Button onClick={handleHideCamera}>
+          {' '}
+          <EyeClosedIcon className="mr-2 size-6" /> Hide Camera
         </Button>
-        <Button onClick={handleHideCamera} className="font-bold">
-          <EyeClosedIcon className="mr-2 size-6"/>
-          {cameraOn ? 'Hide Camera' : 'Show Camera'}
-        </Button>
-        <Button onClick={handleDisconnect} className="font-bold">
-          <LinkBreak2Icon className="mr-2 size-6"/>
-          Disconnect
+        <Button onClick={handleDisconnect}>
+          {' '}
+          <LinkBreak2Icon className="mr-2 size-6" /> Disconnect
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Room;
-
+export default Room
