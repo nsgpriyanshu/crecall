@@ -14,7 +14,8 @@
 
 </div>
 
-</br>
+> [!CAUTION]
+> Attention: I am currently experiencing issues with this application. I am trying to fix it. If you have any insights or can offer assistance, please reach out. Thank you for your understanding and support. Please contribute.
 
 **Crecall** is a secure and anonymous video calling app that lets you connect with others without sharing personal information like email addresses or phone numbers. With Crecall, all you need is a random name and an ID to join or create a meeting.
 
