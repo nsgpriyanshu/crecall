@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.5.1](https://github.com/nsgpriyanshu/crecall/compare/0.5.0...0.5.1) - (2024-08-10)
+
+## Non Code changes
+
+- Add a CAUTION message ([8db216f](https://github.com/nsgpriyanshu/crecall/commit/8db216f443539f083b032a67f228fb71533609f6))
+
 # [0.5.0](https://github.com/nsgpriyanshu/crecall/compare/0.4.1...0.5.0) - (2024-08-09)
 
 ## Bug Fixes
