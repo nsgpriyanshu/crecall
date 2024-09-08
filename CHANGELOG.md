@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.5.2](https://github.com/nsgpriyanshu/crecall/compare/0.5.1...0.5.2) - (2024-09-08)
+
+## Non Code changes
+
+- Delete outdated files ([92b926f](https://github.com/nsgpriyanshu/crecall/commit/92b926f01b7f0f48814fc9d4ad8def2937785267))
+
 # [0.5.1](https://github.com/nsgpriyanshu/crecall/compare/0.5.0...0.5.1) - (2024-08-10)
 
 ## Non Code changes
