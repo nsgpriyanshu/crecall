@@ -34,7 +34,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@favware/cliff-jumper": "^4.0.3",
+    "@favware/cliff-jumper": "^4.1.0",
     "@types/node": "^20.14.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
